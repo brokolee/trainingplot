@@ -24,6 +24,9 @@ function gotData(data) {
         console.log(data[Date].Squats[sqKey]);
         VolumeCounter = VolumeCounter + (parseInt(sqKey) * data[Date].Squats[sqKey]);
         SatzLabel = JSON.stringify(data[Date].Squats);
+        SatzLabel = SatzLabel.replace("}","");
+        SatzLabel = SatzLabel.replace("{","");
+        SatzLabel = SatzLabel.replace(",","\n");
       });
       SquatVolumen.push(VolumeCounter);
       SquatSatzLabels.push(SatzLabel);
@@ -32,9 +35,9 @@ function gotData(data) {
     }
   });
 
-  SquatSatzLabels.forEach(element => {
-    console.log(element);
-  });
+SquatSatzLabels.forEach(element => {
+  console.log(element);
+});
 
   var chart1 = new Chart(SquatChart, {
     type: 'bar',
@@ -49,7 +52,7 @@ function gotData(data) {
       tooltips: {
         callbacks: {
           afterLabel: function (tooltipItem, data) {
-            return toolto;
+           return SquatSatzLabels[tooltipItem.index];
           }
         }
       }
